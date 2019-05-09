@@ -1,0 +1,9 @@
+name: mosquitto
+version: 0.1.30
+description: Mosquitto v0.1.30
+keywords:
+- mosquitto
+maintainers:
+- name: Witlab
+engine: gotpl
+icon: file://logo.png

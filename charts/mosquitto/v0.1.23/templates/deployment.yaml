@@ -1,0 +1,77 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: {{ .Values.image }}
+        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        # lifecycle:
+        #   postStart:
+        #     exec:
+        #       command: ["chown", "mosquitto:mosquitto", "-R", "/mosquitto/data"]
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
+        # securityContext:
+        #   runAsNonRoot: false
+        #   runAsUser: 10001
+        #   capabilities:
+        #     drop:
+        #       - all
+        #   readOnlyRootFilesystem: false
+        ports:
+          - name: mqtt-tcp
+            containerPort: 1883
+            protocol: TCP
+          - name: mqtt-http
+            containerPort: 9001
+            protocol: TCP
+        volumeMounts:
+          - name: mosquitto-conf
+            mountPath: /mosquitto/config/mosquitto.conf
+            subPath: mosquitto.conf
+            readOnly: false
+            command: ["chmod",  "766","-R",  "/mosquitto/config/mosquitto.conf"]
+          - name: mosquitto-data
+            mountPath: /mosquitto/data
+            subPath: mosquitto/data
+            command: ["chmod",  "766","-R",  "/mosquitto/data"]
+            readOnly: false
+          - name: mosquitto-pwd
+            mountPath: /mosquitto/pwd.txt
+            subPath: pwd.txt
+            command: ["chmod",  "766","-R", "/mosquitto/pwd.txt"]
+            command: ['/usr/bin mosquitto_passwd -b /mosquitto/pwd.txt double 321']
+            readOnly: false
+      volumes:
+      - name: mosquitto-conf
+        configMap:
+          name: {{ template "fullname" . }}
+          defaultMode: 777
+      - name: mosquitto-pwd
+        configMap:
+          name: {{ template "fullname" . }}-pwd
+          defaultMode: 777
+      - name: mosquitto-data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ template "fullname" . }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}

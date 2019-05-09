@@ -1,0 +1,9 @@
+name: mqtt-web-ui
+version: 0.2
+description: mqtt-web-ui v0.2
+keywords:
+- mosquitto
+maintainers:
+- name: Witlab
+engine: gotpl
+icon: file://logo0502.png
