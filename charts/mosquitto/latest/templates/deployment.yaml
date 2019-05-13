@@ -63,11 +63,11 @@ spec:
       - name: mosquitto-conf
         configMap:
           name: {{ template "fullname" . }}
-          defaultMode: 777
+          # defaultMode: 777
       - name: mosquitto-pwd
         configMap:
           name: {{ template "fullname" . }}-pwd
-          defaultMode: 777
+          # defaultMode: 777
       - name: mosquitto-data
       {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
