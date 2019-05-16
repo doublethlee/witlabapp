@@ -26,13 +26,13 @@ resources:
    cpu: 100m
    memory: 128Mi
 
-config: |-
-  log_dest stdout
-  listener 1883
-  listener 9001
-  protocol websockets
-  allow_anonymous false
-  password_file /mosquitto/pwd.txt
+# config: |-
+#   log_dest stdout
+#   listener 1883
+#   listener 9001
+#   protocol websockets
+#   allow_anonymous false
+#   password_file /mosquitto/pwd.txt
 
-configPWD: |-
-  admin:$6$0Yra3/PJydL8ASTf$JDRbyNrpX3wZBX7ReTW7LezzoIp8nmv45R8NjAwtQvafpEhqCTgfX9O5ttlPxQTUi8LnvLJwBRQV1qvQmUOAtg==
+# configPWD: |-
+#   admin:$6$0Yra3/PJydL8ASTf$JDRbyNrpX3wZBX7ReTW7LezzoIp8nmv45R8NjAwtQvafpEhqCTgfX9O5ttlPxQTUi8LnvLJwBRQV1qvQmUOAtg==
