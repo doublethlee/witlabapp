@@ -16,7 +16,7 @@ persistence:
   enabled: true
   accessMode: ReadWriteMany
   size: 2Gi
-  storageClass: ssd-gp1
+  # storageClass: ssd-gp1
   
 resources: 
   limits:
