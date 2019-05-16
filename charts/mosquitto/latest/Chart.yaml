@@ -1,6 +1,6 @@
 name: mosquitto
-version: 0.1.30
-description: Mosquitto v0.1.30
+version: 0.1.31
+description: Mosquitto v0.1.31
 keywords:
 - mosquitto
 maintainers:
